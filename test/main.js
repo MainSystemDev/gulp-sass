@@ -1,7 +1,7 @@
 'use strict';
 
 var should = require('should');
-var gutil = require('gulp-util');
+var Vinyl = require('vinyl');
 var path = require('path');
 var fs = require('fs');
 var sass = require('../index');
@@ -17,7 +17,7 @@ var createVinyl = function createVinyl(filename, contents) {
   var base = path.join(__dirname, 'scss');
   var filePath = path.join(base, filename);
 
-  return new gutil.File({
+  return new Vinyl({
     'cwd': __dirname,
     'base': base,
     'path': filePath,
@@ -169,7 +169,7 @@ describe('gulp-sass -- async compile', function() {
     stream.write(errorFile);
   });
 
-   it('should compile a single sass file if the file name has been changed in the stream', function(done) {
+  it('should compile a single sass file if the file name has been changed in the stream', function(done) {
     var sassFile = createVinyl('mixins.scss');
     var stream;
 
@@ -231,7 +231,7 @@ describe('gulp-sass -- async compile', function() {
       '"mappings": "",' +
       '"sources": [ "scss/subdir/multilevelimport.scss" ],' +
       '"sourcesContent": [ "@import ../inheritance;" ]' +
-    '}';
+      '}';
 
     stream = sass();
     stream.on('data', function(cssFile) {
@@ -420,7 +420,7 @@ describe('gulp-sass -- sync compile', function() {
       '"mappings": "",' +
       '"sources": [ "scss/subdir/multilevelimport.scss" ],' +
       '"sourcesContent": [ "@import ../inheritance;" ]' +
-    '}';
+      '}';
 
     stream = sass.sync();
     stream.on('data', function(cssFile) {
